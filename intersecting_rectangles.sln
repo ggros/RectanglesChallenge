@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RectangleIntersectionsTest", "Tests\RectangleIntersectionsTest.csproj", "{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "intersecting_rectangles", "App\intersecting_rectangles.csproj", "{2A16707D-29FA-41F9-B8F7-6118A22AE75B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Debug|x64.Build.0 = Debug|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Debug|x86.Build.0 = Debug|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Release|x64.ActiveCfg = Release|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Release|x64.Build.0 = Release|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Release|x86.ActiveCfg = Release|Any CPU
+		{1CEF71E5-B5C3-4D53-B182-448D9EEBD9E4}.Release|x86.Build.0 = Release|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Debug|x64.Build.0 = Debug|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Debug|x86.Build.0 = Debug|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Release|x64.ActiveCfg = Release|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Release|x64.Build.0 = Release|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Release|x86.ActiveCfg = Release|Any CPU
+		{2A16707D-29FA-41F9-B8F7-6118A22AE75B}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

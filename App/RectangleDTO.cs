@@ -13,8 +13,12 @@ namespace intersecting_rectangles
             this.delta_x = delta_x;
             this.delta_y = delta_y;
         }
-        public string Print(){
+        public string PrintForInput(){
             return $"{x},{y}, delta_x={delta_x}, delta_y={delta_y}";
+        }
+        //second format while printing output
+        public string PrintForOutput(){
+            return $"({x},{y}), delta_x={delta_x}, delta_y={delta_y}";
         }
         [JsonProperty("x", Required = Required.Always)]
         public int x;

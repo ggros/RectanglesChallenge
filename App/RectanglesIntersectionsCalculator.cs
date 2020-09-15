@@ -1,36 +1,60 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace intersecting_rectangles
 {
     public class RectanglesIntersectionsCalculator
     {
         private List<RectangleDTO> input;
-        public RectanglesIntersectionsCalculator(List<RectangleDTO> p_input)
+        private TextWriter output;
+
+        private List<RectangleIntersection> intersections;
+
+        public RectanglesIntersectionsCalculator(List<RectangleDTO> p_input, System.IO.TextWriter p_output)
         {
             this.input = p_input;
+            output = p_output;
             //init names and id
             for (var i = 0; i < input.Count; i++)
             {
                 input[i].Name = $"{i + 1}";
                 input[i].Id = i + 1;
             }
+            intersections = new List<RectangleIntersection>();
+        }
+
+        public List<RectangleIntersection> CalculatedIntersections {
+            get{
+                return intersections;
+            }
         }
 
         public void PrintInput()
         {
-            Console.WriteLine("Input:");
+            output.WriteLine("Input:");
             for (var i = 0; i < input.Count; i++)
             {
                 var r = input[i];
-                Console.WriteLine($"\t{i}: Rectangle at ({r.Print()})");
+                output.WriteLine($"\t{i}: Rectangle at ({r.PrintForInput()})");
+            }
+        }
+        public void PrintOutput()
+        {
+            //print
+            output.WriteLine("Intersections:");
+            for (var i = 0; i < intersections.Count; i++)
+            {
+                var inter = intersections[i];
+                
+                output.WriteLine($"\t{i+1}: Between rectangle {inter.getName()} at {inter.inter.PrintForOutput()}.");
             }
         }
 
         public void TestCollision()
         {
-            var intersections = new List<RectangleIntersection>();
+            intersections = new List<RectangleIntersection>();
             var currentIntersections = new List<RectangleIntersection>();
             for (var i = 0; i < input.Count - 1; i++)
             {
@@ -41,7 +65,7 @@ namespace intersecting_rectangles
                     {
                         inter.Name = $"{input[i].Name}, {input[j].Name}";
 
-                        Console.WriteLine($"Colision between {input[i].Name} and {input[j].Name} at {inter.Print()}");
+                        //output.WriteLine($"Colision between {input[i].Name} and {input[j].Name} at {inter.Print()}");
                         var rSource = new List<RectangleDTO>();
                         rSource.Add(input[i]);
                         rSource.Add(input[j]);
@@ -75,10 +99,11 @@ namespace intersecting_rectangles
                         //check if dup. TODO: we could also check before testing the collision
                         if (currentIntersections.Exists(item => item.Id == curInter.Id) == false)
                         {
-                            Console.WriteLine($"Colision between {inter.inter.Name} and {r.Name} at {inter2.Print()}");
+                            //output.WriteLine($"Colision between {inter.inter.Name} and {r.Name} at {inter2.Print()}");
                             currentIntersections.Add(curInter);
                         }
-                        else{
+                        else
+                        {
                             //Console.WriteLine("Duplicate. Skipping.");
                         }
                     }
@@ -90,6 +115,8 @@ namespace intersecting_rectangles
             }
             intersections.AddRange(currentIntersections);
             //TODO: check intersections again if inter with 4 or more rectangles
+
+            
         }
 
         private bool Collision(RectangleDTO rect1, RectangleDTO rect2, out RectangleDTO rinter)
