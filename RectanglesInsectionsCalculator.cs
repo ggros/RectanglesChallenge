@@ -50,7 +50,7 @@ namespace intersecting_rectangles
                     else
                     {
 
-                        Console.WriteLine($"No Colision between {input[i].Name} and {input[j].Name}");
+                        //Console.WriteLine($"No Colision between {input[i].Name} and {input[j].Name}");
                     }
                 }
                 //input.AddRange(currentIntersections);
@@ -67,7 +67,6 @@ namespace intersecting_rectangles
                     {
                         inter2.Name = $"{inter.inter.Name}, {r.Name}";
 
-                        Console.WriteLine($"Colision between {inter.inter.Name} and {r.Name} at {inter2.Print()}");
                         var rSource = new List<RectangleDTO>();
                         rSource.AddRange(inter.input);
                         rSource.Add(r);
@@ -76,10 +75,11 @@ namespace intersecting_rectangles
                         //check if dup. TODO: we could also check before testing the collision
                         if (currentIntersections.Exists(item => item.Id == curInter.Id) == false)
                         {
+                            Console.WriteLine($"Colision between {inter.inter.Name} and {r.Name} at {inter2.Print()}");
                             currentIntersections.Add(curInter);
                         }
                         else{
-                            Console.WriteLine("Duplicate. Skipping.");
+                            //Console.WriteLine("Duplicate. Skipping.");
                         }
                     }
                     else

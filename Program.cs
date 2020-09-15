@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -30,29 +34,41 @@ namespace intersecting_rectangles
             }
             return true;
         }
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureServices((hostContext, services) =>
+            {
+                //services.AddLogging(configure => configure.AddConsole()); default Builder already adds the console
+                services.AddTransient<MyApplication>();
+            });
 
-        static int Main(string[] args)
+        static async Task<int> Main(string[] args)
         {
             if (!CheckArgsAndPrintHelp(args)) return -1;
             var fileName = args[0];
 
-            var jsonString = File.ReadAllText(fileName);
-            //var obj = JsonConvert.DeserializeObject(jsonString);
+            //setup host with Dependency Injection
+            var host = CreateHostBuilder(args).Build();
 
-            RectanglesDTO data;
-
-            using (var sr = new StreamReader(fileName))
+            using (var serviceScope = host.Services.CreateScope())
             {
-                var reader = new RectanglesFileReader(sr);
-                data = reader.ReadContent();
+                var services = serviceScope.ServiceProvider;
+                var _logger = services.GetService<ILogger<Program>>();
+
+                try
+                {
+                    var myService = services.GetRequiredService<MyApplication>();
+                    await myService.Run(fileName);
+
+                    //_logger.LogInformation("Success");
+                    return 0;
+                }
+                catch (Exception ex)
+                {                    
+                    _logger.LogCritical(ex,ex.Message);
+                    return -1;
+                }
             }
-            var calculator = new RectanglesInsectionsCalculator(data.rects);
-            calculator.PrintInput();
-            calculator.TestCollision();
-
-
-            //Console.WriteLine("Hello World!");
-            return 0;
         }
     }
 }
