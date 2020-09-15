@@ -25,8 +25,10 @@ namespace intersecting_rectangles
             intersections = new List<RectangleIntersection>();
         }
 
-        public List<RectangleIntersection> CalculatedIntersections {
-            get{
+        public List<RectangleIntersection> CalculatedIntersections
+        {
+            get
+            {
                 return intersections;
             }
         }
@@ -47,8 +49,8 @@ namespace intersecting_rectangles
             for (var i = 0; i < intersections.Count; i++)
             {
                 var inter = intersections[i];
-                
-                output.WriteLine($"\t{i+1}: Between rectangle {inter.getName()} at {inter.inter.PrintForOutput()}.");
+
+                output.WriteLine($"\t{i + 1}: Between rectangle {inter.getName()} at {inter.inter.PrintForOutput()}.");
             }
         }
 
@@ -56,6 +58,7 @@ namespace intersecting_rectangles
         {
             intersections = new List<RectangleIntersection>();
             var currentIntersections = new List<RectangleIntersection>();
+            var nbRectanglesInIntersection = 2;//number of rectangles involved
             for (var i = 0; i < input.Count - 1; i++)
             {
                 for (var j = i + 1; j < input.Count; j++)
@@ -69,54 +72,64 @@ namespace intersecting_rectangles
                         var rSource = new List<RectangleDTO>();
                         rSource.Add(input[i]);
                         rSource.Add(input[j]);
-                        intersections.Add(new RectangleIntersection(rSource, inter));
+                        currentIntersections.Add(new RectangleIntersection(rSource, inter));
                     }
                     else
                     {
-
                         //Console.WriteLine($"No Colision between {input[i].Name} and {input[j].Name}");
                     }
                 }
                 //input.AddRange(currentIntersections);
             }
-            //check inter with previous intersections
-            currentIntersections = new List<RectangleIntersection>();
-            for (var i = 0; i < input.Count - 1; i++)
-            {
-                var r = input[i];
-                RectangleDTO inter2;
-                foreach (var inter in intersections.FindAll(me => me.input.Contains(r) == false))
-                {
-                    if (Collision(inter.inter, r, out inter2))
-                    {
-                        inter2.Name = $"{inter.inter.Name}, {r.Name}";
+            intersections.AddRange(currentIntersections);
+            nbRectanglesInIntersection++;//intersection of 3 rectangles
 
-                        var rSource = new List<RectangleDTO>();
-                        rSource.AddRange(inter.input);
-                        rSource.Add(r);
-                        var curInter = new RectangleIntersection(rSource, inter2);
-                        //Console.WriteLine($"Inter Id: {curInter.Id}");
-                        //check if dup. TODO: we could also check before testing the collision
-                        if (currentIntersections.Exists(item => item.Id == curInter.Id) == false)
+            //no intersections, no need to check any further
+            if (currentIntersections.Count == 0)
+            {
+                return;
+            }
+            //while there are new intersections found. Also limit to 10.            
+            while (currentIntersections.Count > 0 && nbRectanglesInIntersection<=input.Count && nbRectanglesInIntersection<11)
+            {
+                var newIntersections = new List<RectangleIntersection>();
+                //check inter with previous intersections                
+                for (var i = 0; i < input.Count - 1; i++)
+                {
+                    var r = input[i];
+                    RectangleDTO inter2;
+                    foreach (var inter in currentIntersections.FindAll(me => me.input.Contains(r) == false))
+                    {
+                        if (Collision(inter.inter, r, out inter2))
                         {
-                            //output.WriteLine($"Colision between {inter.inter.Name} and {r.Name} at {inter2.Print()}");
-                            currentIntersections.Add(curInter);
+                            inter2.Name = $"{inter.inter.Name}, {r.Name}";
+
+                            var rSource = new List<RectangleDTO>();
+                            rSource.AddRange(inter.input);
+                            rSource.Add(r);
+                            var curInter = new RectangleIntersection(rSource, inter2);
+                            //Console.WriteLine($"Inter Id: {curInter.Id}");
+                            //check if dup. TODO: we could also check before testing the collision
+                            if (newIntersections.Exists(item => item.Id == curInter.Id) == false)
+                            {
+                                //output.WriteLine($"Colision between {inter.inter.Name} and {r.Name} at {inter2.Print()}");
+                                newIntersections.Add(curInter);
+                            }
+                            else
+                            {
+                                //Console.WriteLine("Duplicate. Skipping.");
+                            }
                         }
                         else
                         {
-                            //Console.WriteLine("Duplicate. Skipping.");
+                            //Console.WriteLine($"No Colision between {inter.inter.Name} and {r.Name}");
                         }
                     }
-                    else
-                    {
-                        //Console.WriteLine($"No Colision between {inter.inter.Name} and {r.Name}");
-                    }
                 }
+                intersections.AddRange(newIntersections);
+                currentIntersections = newIntersections;
+                nbRectanglesInIntersection++;
             }
-            intersections.AddRange(currentIntersections);
-            //TODO: check intersections again if inter with 4 or more rectangles
-
-            
         }
 
         private bool Collision(RectangleDTO rect1, RectangleDTO rect2, out RectangleDTO rinter)
