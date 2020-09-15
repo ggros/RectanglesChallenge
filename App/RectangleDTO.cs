@@ -5,7 +5,9 @@ namespace intersecting_rectangles
 {
     public class RectangleDTO
     {
+        [JsonIgnore]
         public string Name;
+        [JsonIgnore]
         public int Id;
         public RectangleDTO(int x,int y,int delta_x,int delta_y){
             this.x = x;
