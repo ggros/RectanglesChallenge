@@ -23,6 +23,16 @@ namespace intersecting_rectangles
             {
                 input[i].Name = $"{i + 1}";
                 input[i].Id = i + 1;
+
+                //handle negative width and length
+                if(input[i].delta_x < 0){
+                    input[i].x = input[i].x + input[i].delta_x;
+                    input[i].delta_x = -input[i].delta_x;
+                }
+                if(input[i].delta_y < 0){
+                    input[i].y = input[i].y + input[i].delta_y;
+                    input[i].delta_y = -input[i].delta_y;
+                }
             }
             intersections = new List<RectangleIntersection>();
         }
@@ -162,7 +172,6 @@ namespace intersecting_rectangles
             }
             rinter = new RectangleDTO(0, 0, 0, 0);//empty intersection
             return false;
-            // collision detected!
         }
     }
 }

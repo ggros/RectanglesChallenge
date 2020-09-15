@@ -31,6 +31,27 @@ namespace RectangleIntersectionsTest
         }
 
         [TestMethod]
+        public void TestPrintNegative()
+        {
+            //setup
+            var rects = new List<RectangleDTO>();
+            rects.Add(new RectangleDTO(10, 10, -10, -20));
+            var ms = new MemoryStream();
+            var output = new StreamWriter(ms);
+
+            //test
+            var calculator = new RectanglesIntersectionsCalculator(rects, output);
+            calculator.PrintInput();
+
+
+            output.Flush();
+            ms.Seek(0, SeekOrigin.Begin);
+            var str = (new StreamReader(ms)).ReadToEnd();
+            var template = $"Input:{Environment.NewLine}\t0: Rectangle at (0,-10, delta_x=10, delta_y=20){Environment.NewLine}";
+            Assert.AreEqual(template, str);
+        }
+
+        [TestMethod]
         public void TestSampleOutput()
         {
             //setup
