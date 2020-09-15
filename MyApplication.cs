@@ -35,7 +35,7 @@ namespace intersecting_rectangles
                 var reader = new RectanglesFileReader(sr);
                 data = reader.ReadContent();
             }
-            var calculator = new RectanglesInsectionsCalculator(data.rects);
+            var calculator = new RectanglesIntersectionsCalculator(data.rects);
             calculator.PrintInput();
             calculator.TestCollision();
         }

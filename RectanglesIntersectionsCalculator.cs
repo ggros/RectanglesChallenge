@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace intersecting_rectangles
 {
-    public class RectanglesInsectionsCalculator
+    public class RectanglesIntersectionsCalculator
     {
         private List<RectangleDTO> input;
-        public RectanglesInsectionsCalculator(List<RectangleDTO> p_input)
+        public RectanglesIntersectionsCalculator(List<RectangleDTO> p_input)
         {
             this.input = p_input;
             //init names and id
