@@ -5,6 +5,8 @@ project created with dot net core 3.1 (`dotnet new console`)
 To quickly test using docker and image on docker hub  
     `docker run -it --rm ggros/intersecting-rectangles-image`
 
+sample results: https://htmlpreview.github.io/?https://github.com/ggros/RectanglesChallenge/blob/master/Tests/sample.html
+
 ## install/prerequisites for coding
 go to https://dotnet.microsoft.com/download/dotnet-core/3.1 to install dotnet.
 to edit the code, you can use vscode or any IDE that supports C# and dot net core.
