@@ -73,6 +73,10 @@ namespace intersecting_rectangles
             calculator.PrintInput();
             calculator.TestCollision();
             calculator.PrintOutput();
+
+            //used to paste into html for manual verification
+            //var jsonResults = calculator.jsonResults();
+            //Console.Write(jsonResults);
         }
     }
 }

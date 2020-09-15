@@ -1,35 +1,101 @@
 <!DOCTYPE html>
 <html>
+
 <body>
 
-<canvas id="myCanvas" width="600" height="500" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.</canvas>
+    <canvas id="myCanvas" width="600" height="500" style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.</canvas>
+    <p>
+        Legend:
+    <ul id="legend">
+    </ul>
+    </p>
+    <p>
+        Intersections:
+    <ul id="intersections">
+    </ul>
+    </p>
 
-<script>
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
+    <script>
+        function randomColor(brightness) {
+            function randomChannel(brightness) {
+                var r = 255 - brightness;
+                var n = 0 | ((Math.random() * r) + brightness);
+                var s = n.toString(16);
+                return (s.length == 1) ? '0' + s : s;
+            }
+            return '#' + randomChannel(brightness) + randomChannel(brightness) + randomChannel(brightness);
+        }
+        var lastRect = null;
+        function showInter(idx) {
+            let cInter = intersections[idx];
+            let rect = cInter.inter;
+            ctx.beginPath();
+            if (lastRect != null) {
+                ctx.clearRect(lastRect["x"], lastRect["y"], lastRect["delta_x"], lastRect["delta_y"])
+            }
+            lastRect = rect;
+            ctx.rect(rect["x"], rect["y"], rect["delta_x"], rect["delta_y"]);
+            //let color = randomColor(0);
+            ctx.fillStyle = colors[idx % colors.length];
+            ctx.fill();
+        }
+        var arr = [
+            { "x": 100, "y": 100, "delta_x": 250, "delta_y": 180 },
+            { "x": 120, "y": 200, "delta_x": 250, "delta_y": 150 },
+            { "x": 140, "y": 160, "delta_x": 250, "delta_y": 100 },
+            { "x": 160, "y": 140, "delta_x": 350, "delta_y": 190 }
+        ];
 
-ctx.beginPath();
-ctx.rect(100, 100, 250, 80);
-ctx.strokeStyle = "red";
-ctx.stroke();
+        var intersections = []
+        intersections.push({ name: '1 and 2', inter: { "x": 120, "y": 200, "delta_x": 230, "delta_y": 80 } })
+        intersections.push({ name: '1 and 3', inter: { "x": 140, "y": 160, "delta_x": 210, "delta_y": 100 } })
+        intersections.push({ name: '1 and 4', inter: { "x": 160, "y": 140, "delta_x": 190, "delta_y": 140 } })
+        intersections.push({ name: '2 and 3', inter: { "x": 140, "y": 200, "delta_x": 230, "delta_y": 60 } })
+        intersections.push({ name: '2 and 4', inter: { "x": 160, "y": 200, "delta_x": 210, "delta_y": 130 } })
+        intersections.push({ name: '3 and 4', inter: { "x": 160, "y": 160, "delta_x": 230, "delta_y": 100 } })
+        intersections.push({ name: '1, 2 and 3', inter: { "x": 140, "y": 200, "delta_x": 210, "delta_y": 60 } })
+        intersections.push({ name: '1, 2 and 4', inter: { "x": 160, "y": 200, "delta_x": 190, "delta_y": 80 } })
+        intersections.push({ name: '1, 3 and 4', inter: { "x": 160, "y": 160, "delta_x": 190, "delta_y": 100 } })
+        intersections.push({ name: '2, 3 and 4', inter: { "x": 160, "y": 200, "delta_x": 210, "delta_y": 60 } })
+        intersections.push({ name: '1, 2, 3 and 4', inter: { "x": 160, "y": 200, "delta_x": 190, "delta_y": 60 } })
 
-ctx.beginPath();
-ctx.rect(120, 200, 250, 150);
-ctx.strokeStyle = "blue";
-ctx.stroke();
+        var intersectionsUL = document.getElementById('intersections');
+        intersections.forEach((c, i) => {
 
-ctx.beginPath();
-ctx.rect(140, 160, 250, 100);
-ctx.strokeStyle = "green";
-ctx.stroke();
+            let node = document.createElement("LI");
+            node.innerHTML = `<a href='#' onclick='showInter(${i})'>${c.name}</a>`;
 
-ctx.beginPath();
-ctx.rect(160, 140, 350, 190);
-ctx.strokeStyle = "black";
-ctx.stroke();
+            intersectionsUL.appendChild(node);
+        });
 
-</script> 
+        //legend
+        var colors = ["red", "blue", "green", "yellow", "black", "purple", "darkblue", "lightblue"];
+        var legend = document.getElementById('legend');
+        colors.forEach((c, i) => {
+            let node = document.createElement("LI");
+            let textnode = document.createTextNode(`${i + 1}: ${c}`);
+            node.appendChild(textnode);
+            legend.appendChild(node);
+        });
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+
+        function displayInput() {
+            for (var i = 0; i < arr.length; i++) {
+                var rect = arr[i];
+                ctx.beginPath();
+                ctx.rect(rect["x"], rect["y"], rect["delta_x"], rect["delta_y"]);
+                //let color = randomColor(0);
+                ctx.strokeStyle = colors[i];
+                ctx.stroke();
+            }
+        }
+        displayInput();
+
+
+    </script>
 
 </body>
+
 </html>

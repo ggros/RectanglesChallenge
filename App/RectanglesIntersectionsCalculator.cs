@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace intersecting_rectangles
 {
@@ -52,6 +54,18 @@ namespace intersecting_rectangles
 
                 output.WriteLine($"\t{i + 1}: Between rectangle {inter.getName()} at {inter.inter.PrintForOutput()}.");
             }
+        }
+        public string jsonResults(){
+            var sb = new StringBuilder();
+            sb.AppendLine("var intersections = []");
+            for (var i = 0; i < intersections.Count; i++)
+            {
+                var inter = intersections[i];
+                var r = inter.inter;                
+                
+                sb.AppendLine($"intersections.push({{name: '{inter.getName()}', inter: {JsonConvert.SerializeObject(r)}}})");              
+            }
+            return sb.ToString();
         }
 
         public void TestCollision()
